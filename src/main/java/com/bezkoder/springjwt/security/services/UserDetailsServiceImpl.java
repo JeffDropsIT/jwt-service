@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bezkoder.springjwt.models.User;
 import com.bezkoder.springjwt.repository.UserRepository;
 
+import java.util.Collection;
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
   @Autowired
@@ -18,6 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Override
   @Transactional
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    Collection<User> users = userRepository.findAll();
     User user = userRepository.findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 
